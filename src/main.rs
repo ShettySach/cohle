@@ -10,7 +10,7 @@ fn main() {
                 .required(false)
                 .help("Index of the quotes"),
         )
-        .subcommand(Command::new("list").about("Lists quotes"))
+        .subcommand(Command::new("list").about("Lists all the quotes along with their indices"))
         .get_matches();
 
     let content = fs::read_to_string("quotes.txt").expect("Error in reading quotes.txt");
@@ -22,9 +22,11 @@ fn main() {
         Some("list") => {
             println!("List of quotes with indices - \n");
             for (ind, quote) in quotes.iter().enumerate() {
-                println!("{} - \t{}...", ind, &quote[0..30])
+                println!(r#"  {} - {}...""#, ind, &quote[0..35])
             }
-            println!("Use - cohle n - to print the nth quote");
+            println!(
+                "\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote."
+            );
         }
         _ => {
             if res.contains_id("index") {
