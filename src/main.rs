@@ -8,14 +8,17 @@ fn main() {
             Arg::new("index")
                 .value_parser(value_parser!(usize))
                 .required(false)
-                .help("Index of the quotes"),
+                .help("Index of the quotes (Optional)"),
         )
-        .subcommand(Command::new("list").about("Lists all the quotes along with their indices"))
+        .subcommand(
+            Command::new("list")
+                .visible_alias("l")
+                .about("Lists all the quotes along with their indices"),
+        )
         .get_matches();
 
     let content = fs::read_to_string("quotes.txt").expect("Error in reading quotes.txt");
     let parts = content.lines();
-
     let quotes = parts.collect::<Vec<&str>>();
 
     match res.subcommand_name() {
