@@ -1,6 +1,12 @@
 use clap::{command, value_parser, Arg, Command};
 use rand::Rng;
 use std::fs;
+use textwrap::fill;
+
+fn wrap_text(input_text: &str, term_width: usize) -> String {
+    let wrapped_text = fill(input_text, term_width);
+    wrapped_text
+}
 
 fn main() {
     let res = command!()
@@ -21,6 +27,8 @@ fn main() {
     let parts = content.lines();
     let quotes = parts.collect::<Vec<&str>>();
 
+    let term_width = 40;
+
     match res.subcommand_name() {
         Some("list") => {
             println!("List of quotes with indices - \n");
@@ -36,11 +44,11 @@ fn main() {
                 let ind: usize = *res
                     .get_one("index")
                     .expect("Index must have value from 0 to n");
-                println!("{}", quotes[ind]);
+                println!("{}", wrap_text(quotes[ind], term_width));
             } else {
                 let mut rng = rand::thread_rng();
                 let ind: usize = rng.gen_range(0..quotes.len());
-                println!("{}", quotes[ind]);
+                println!("{}", wrap_text(quotes[ind], term_width));
             }
         }
     }
