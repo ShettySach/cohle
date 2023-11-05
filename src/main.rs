@@ -1,4 +1,5 @@
-use clap::{command, value_parser, Arg, Command};
+use clap::{value_parser, Arg, Command};
+use crossterm::terminal;
 use rand::Rng;
 use std::fs;
 use textwrap::fill;
@@ -9,7 +10,9 @@ fn wrap_text(input_text: &str, term_width: usize) -> String {
 }
 
 fn main() {
-    let res = command!()
+    let res = Command::new("cohle")
+        .about("Rust CLI that prints Rust Cohle quotes")
+        .author("github.com/shettysach")
         .arg(
             Arg::new("index")
                 .value_parser(value_parser!(usize))
@@ -24,10 +27,9 @@ fn main() {
         .get_matches();
 
     let content = fs::read_to_string("quotes.txt").expect("Error in reading quotes.txt");
-    let parts = content.lines();
-    let quotes = parts.collect::<Vec<&str>>();
+    let quotes = content.lines().collect::<Vec<&str>>();
 
-    let term_width = 40;
+    let term_width = terminal::size().unwrap().0 as usize;
 
     match res.subcommand_name() {
         Some("list") => {

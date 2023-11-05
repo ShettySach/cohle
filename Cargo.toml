@@ -7,5 +7,6 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.4.7", features = ["cargo"] }
+crossterm = "0.27.0"
 rand = "0.8.5"
 textwrap = "0.16.0"
