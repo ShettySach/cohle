@@ -1,4 +1,5 @@
-use clap::{command, value_parser, Arg};
+use clap::{command, value_parser, Arg, Command};
+use rand::Rng;
 use std::fs;
 
 fn main() {
@@ -9,14 +10,7 @@ fn main() {
                 .required(false)
                 .help("Index of the quotes"),
         )
-        .arg(
-            Arg::new("list")
-                .short('l')
-                .long("list")
-                .required(false)
-                .help("List all quotes")
-                .conflicts_with("index"),
-        )
+        .subcommand(Command::new("list").about("Lists quotes"))
         .get_matches();
 
     let content = fs::read_to_string("quotes.txt").expect("Error in reading quotes.txt");
@@ -24,12 +18,25 @@ fn main() {
 
     let quotes = parts.collect::<Vec<&str>>();
 
-    if res.contains_id("index") {
-        let ind: usize = *res
-            .get_one("index")
-            .expect("Index must have value from 0 to n");
-        println!("{}", quotes[ind]);
-    } else {
-        print!("Hello");
+    match res.subcommand_name() {
+        Some("list") => {
+            println!("List of quotes with indices - \n");
+            for (ind, quote) in quotes.iter().enumerate() {
+                println!("{} - \t{}...", ind, &quote[0..30])
+            }
+            println!("Use - cohle n - to print the nth quote");
+        }
+        _ => {
+            if res.contains_id("index") {
+                let ind: usize = *res
+                    .get_one("index")
+                    .expect("Index must have value from 0 to n");
+                println!("{}", quotes[ind]);
+            } else {
+                let mut rng = rand::thread_rng();
+                let ind: usize = rng.gen_range(0..quotes.len());
+                println!("{}", quotes[ind]);
+            }
+        }
     }
 }
