@@ -1,4 +1,5 @@
 use clap::{value_parser, Arg, Command};
+use crossterm::style::Stylize;
 use crossterm::terminal;
 use rand::Rng;
 use std::fs;
@@ -35,7 +36,7 @@ fn main() {
         Some("list") => {
             println!("List of quotes with indices - \n");
             for (ind, quote) in quotes.iter().enumerate() {
-                println!(r#"  {} - {}...""#, ind, &quote[0..35])
+                println!(r#"  {} - {}...""#, ind, &quote[0..35].red())
             }
             println!(
                 "\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote."
@@ -46,11 +47,11 @@ fn main() {
                 let ind: usize = *res
                     .get_one("index")
                     .expect("Index must have value from 0 to n");
-                println!("{}", wrap_text(quotes[ind], term_width));
+                println!("{}", wrap_text(quotes[ind], term_width).red());
             } else {
                 let mut rng = rand::thread_rng();
                 let ind: usize = rng.gen_range(0..quotes.len());
-                println!("{}", wrap_text(quotes[ind], term_width));
+                println!("{}", wrap_text(quotes[ind], term_width).red());
             }
         }
     }
