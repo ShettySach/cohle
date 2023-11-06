@@ -3,18 +3,6 @@ use crossterm::style::Stylize;
 use crossterm::terminal;
 use rand::Rng;
 use std::fs;
-use textwrap::{fill, wrap};
-
-fn fill_text(input_text: &str, term_width: usize) -> String {
-    let filled_text = fill(input_text, term_width);
-    filled_text
-}
-
-fn wrap_text(input_text: &str, term_width: usize) -> Vec<String> {
-    let wrapped_text = wrap(input_text, term_width);
-    let vec_str: Vec<String> = wrapped_text.iter().map(|cow| cow.to_string()).collect();
-    vec_str
-}
 
 fn print_img(img: Vec<&str>, quote: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
@@ -22,23 +10,30 @@ fn print_img(img: Vec<&str>, quote: &str) {
     match width {
         Some(value) => {
             let imlen = img.len();
-            let wquote = wrap_text(quote, value);
+            let wquote = cohle::wrap_text(quote, value);
             let qlen = wquote.len();
-            let start = (imlen - qlen) / 2 as usize;
+            let start = imlen.abs_diff(qlen) / 2 as usize;
 
-            for i in 0..start {
-                println!("{}", img[i]);
-            }
-            for i in start..(start + qlen) {
-                println!("{}  {}", img[i], wquote[i - start].clone().red());
-            }
+            if imlen >= qlen {
+                for i in 0..start {
+                    println!("{}", img[i]);
+                }
+                for i in start..(start + qlen) {
+                    println!("{}  {}", img[i], wquote[i - start].clone().red());
+                }
 
-            for i in (start + qlen)..imlen {
-                println!("{}", img[i]);
+                for i in (start + qlen)..imlen {
+                    println!("{}", img[i]);
+                }
+            } else {
+                println!("{}", cohle::fill_text(quote, term_width).red());
+                println!(
+                    "< Terminal width too small, try expanding window or reducing font size >"
+                );
             }
         }
         _ => {
-            println!("{}", fill_text(quote, term_width).red());
+            println!("{}", cohle::fill_text(quote, term_width).red());
             println!("< Terminal width too small, try expanding window or reducing font size >");
         }
     }
@@ -101,11 +96,11 @@ fn main() {
                 let ind: usize = *res
                     .get_one("index")
                     .expect("Index must have value from 0 to n");
-                println!("{}", fill_text(quotes[ind], term_width).red());
+                println!("{}", cohle::fill_text(quotes[ind], term_width).red());
             } else {
                 let mut rng = rand::thread_rng();
                 let ind: usize = rng.gen_range(0..quotes.len());
-                println!("{}", fill_text(quotes[ind], term_width).red());
+                println!("{}", cohle::fill_text(quotes[ind], term_width).red());
             }
         }
     }
