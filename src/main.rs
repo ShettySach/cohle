@@ -19,7 +19,7 @@ fn print_img(img: Vec<&str>, quote: &str) {
                     println!("{}", img[i]);
                 }
                 for i in start..(start + qlen) {
-                    println!("{}  {}", img[i], wquote[i - start].clone().red());
+                    println!("{}  {}", img[i], wquote[i - start].red());
                 }
 
                 for i in (start + qlen)..imlen {
@@ -28,13 +28,13 @@ fn print_img(img: Vec<&str>, quote: &str) {
             } else {
                 println!("{}", cohle::fill_text(quote, term_width).red());
                 println!(
-                    "< Terminal width too small, try expanding window or reducing font size >"
+                    "< Terminal width too small to display image, try expanding window or reducing font size >"
                 );
             }
         }
         _ => {
             println!("{}", cohle::fill_text(quote, term_width).red());
-            println!("< Terminal width too small, try expanding window or reducing font size >");
+            println!("< Terminal width too small to display image, try expanding window or reducing font size >");
         }
     }
 }

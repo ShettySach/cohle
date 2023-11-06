@@ -1,5 +1,6 @@
 use crossterm::style::Stylize;
 use crossterm::terminal;
+use std::borrow::Cow;
 use textwrap::{fill, wrap};
 
 pub fn fill_text(input_text: &str, term_width: usize) -> String {
@@ -7,10 +8,9 @@ pub fn fill_text(input_text: &str, term_width: usize) -> String {
     filled_text
 }
 
-pub fn wrap_text(input_text: &str, term_width: usize) -> Vec<String> {
+pub fn wrap_text(input_text: &str, term_width: usize) -> Vec<Cow<'_, str>> {
     let wrapped_text = wrap(input_text, term_width);
-    let vec_str: Vec<String> = wrapped_text.iter().map(|cow| cow.to_string()).collect();
-    vec_str
+    wrapped_text
 }
 
 pub fn print_img(img: Vec<&str>, quote: &str) {
