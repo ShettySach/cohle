@@ -1,5 +1,6 @@
 pub mod text_vars {
-    pub const ITEXT: &str = "@@@@@@@@@@@@@@&&@@&B??57 .~JY##P5B&@@@&&@&&&&
+    pub const ITEXT: &str = 
+"@@@@@@@@@@@@@@&&@@&B??57 .~JY##P5B&@@@&&@&&&&
 @@#&&@@&@@@@@@&&#J:          ^?JJB@@@@@@@&&&&
 @@B&&@@@@@@@@@&?.                :J#@@@@@@&&&
 @@B#G@@@@@@@@&^                     7&&&&@&#&
@@ -23,6 +24,7 @@ pub mod text_vars {
                7#&&&&P^YPG5..: ^ :.          
                 :P&#7    !7:   &5^.          
                   ~#BY~.       B#.            ";
+
     pub const QTEXT: &str = 
     "I think human consciousness is a tragic misstep in human evolution. We became too self aware; nature created an aspect of nature separate from itself. We are creatures that should not exist by natural law. We are things that labor under the illusion of having a self, a secretion of sensory experience and feeling, programmed with total assurance that we are each somebody, when in fact everybody's nobody. I think the honorable thing for our species to do is deny our programming, stop reproducing, walk hand in hand into extinction, one last midnight, brothers and sisters opting out of a raw deal.
 I tell myself I bear witness. But the real answer is that it's obviously my programming. And I lack the constitution for suicide.

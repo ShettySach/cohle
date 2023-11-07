@@ -14,6 +14,20 @@ fn main() {
                 .required(false)
                 .help("Index of the quote (Optional)"),
         )
+        .arg(
+            Arg::new("icol")
+                .short('i')
+                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+                .required(false)
+                .help("Colour of image"),
+        )
+        .arg(
+            Arg::new("qcol")
+                .short('q')
+                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+                .required(false)
+                .help("Colour of quote"),
+        )
         .subcommand(
             Command::new("list")
                 .visible_alias("l")
@@ -32,39 +46,41 @@ fn main() {
         .get_matches();
 
     let quotes = QTEXT.lines().collect::<Vec<&str>>();
-
     let imgs = ITEXT.lines().collect::<Vec<&str>>();
+
+    let ind: usize = if let Some(value) = res.get_one::<usize>("index") {
+        *value
+    } else {
+        let mut rng = rand::thread_rng();
+        rng.gen_range(0..quotes.len())
+    };
+
+    let icol: &str = if let Some(value) = res.get_one::<String>("icol") {
+        value.as_str()
+    } else {
+        "white"
+    };
+
+    let qcol: &str = if let Some(value) = res.get_one::<String>("qcol") {
+        value.as_str()
+    } else {
+        "red"
+    };
 
     match res.subcommand_name() {
         Some("list") => {
             cohle::list_quotes(quotes);
         }
         Some("quote") => {
-            if res.contains_id("index") {
-                let ind: usize = *res
-                    .get_one("index")
-                    .expect("Index must have value from 0 to n");
-                cohle::fill_print(quotes[ind]);
-            } else {
-                let mut rng = rand::thread_rng();
-                let ind: usize = rng.gen_range(0..quotes.len());
-                cohle::fill_print(quotes[ind]);
-            }
+            cohle::fill_print(quotes[ind], qcol);
         }
         Some("image") => {
             print!("{}", ITEXT);
         }
         _ => {
-            if res.contains_id("index") {
-                let ind: usize = *res
-                    .get_one("index")
-                    .expect("Index must have value from 0 to n");
-                cohle::print_img(imgs, quotes[ind]);
-            } else {
-                let mut rng = rand::thread_rng();
-                let ind: usize = rng.gen_range(0..quotes.len());
-                cohle::print_img(imgs, quotes[ind]);
-            }
+            let mut rng = rand::thread_rng();
+            let ind: usize = rng.gen_range(0..quotes.len());
+            cohle::print_img(imgs, quotes[ind], icol, qcol);
         }
     }
 }
