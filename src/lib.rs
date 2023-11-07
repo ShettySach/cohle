@@ -1,12 +1,12 @@
-use crossterm::style::{StyledContent, Stylize};
+use crossterm::style::Stylize;
 use crossterm::terminal;
 use std::borrow::Cow;
 use textwrap::{fill, wrap};
 
-pub fn fill_text(input_text: &str) -> String {
+pub fn fill_print(input_text: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
     let filled_text = fill(input_text, term_width);
-    filled_text
+    println!("{}", filled_text.red())
 }
 
 pub fn wrap_text(input_text: &str, width: usize) -> Vec<Cow<'_, str>> {
@@ -14,21 +14,17 @@ pub fn wrap_text(input_text: &str, width: usize) -> Vec<Cow<'_, str>> {
     wrapped_text
 }
 
-pub fn colprint<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
-    match colr {
-        "r" | "red" => text.red(),
-        "b" | "blue" => text.blue(),
-        "y" | "yellow" => text.yellow(),
-        "g" | "green" => text.green(),
-        "m" | "magenta" => text.magenta(),
-        "c" | "cyan" => text.cyan(),
-        _ => text.white(),
+pub fn list_quotes(quotes: Vec<&str>) {
+    println!("List of quotes with indices - \n");
+    for (ind, quote) in quotes.iter().enumerate() {
+        println!(r#"  {} - {}...""#, ind, &quote[0..35])
     }
+    println!("\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote.");
 }
 
 pub fn print_img(img: Vec<&str>, quote: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
-    let width = term_width.checked_sub(img[0].len() + 6);
+    let width = term_width.checked_sub(img[0].len() + 4);
 
     match width {
         Some(value) => {
@@ -42,24 +38,50 @@ pub fn print_img(img: Vec<&str>, quote: &str) {
                     println!("{}", img[i]);
                 }
                 for i in start..(start + qlen) {
-                    println!("{}  {}", img[i], wquote[i - start]);
+                    println!("{}  {}", img[i], wquote[i - start].red());
                 }
 
                 for i in (start + qlen)..imlen {
                     println!("{}", img[i]);
                 }
             } else {
-                println!("{}", fill_text(quote));
+                fill_print(quote);
                 println!("\n{}",
                     "Terminal width too small to print message, try expanding window or reducing font size".dark_grey()
                 );
             }
         }
         _ => {
-            println!("{}", fill_text(quote));
+            fill_print(quote);
             println!("\n{}",
                     "Terminal width too small to print message, try expanding window or reducing font size".dark_grey()
                 );
         }
     }
 }
+
+/*
+pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
+    match colr {
+        "r" | "red" => text.red(),
+        "b" | "blue" => text.blue(),
+        "y" | "yellow" => text.yellow(),
+        "g" | "green" => text.green(),
+        "m" | "magenta" => text.magenta(),
+        "c" | "cyan" => text.cyan(),
+        _ => text.white(),
+    }
+}
+
+pub fn colcow<'a>(text: &'a Cow<'_, str>, colr: &str) -> StyledContent<&'a str> {
+    match colr {
+        "r" | "red" => text.red(),
+        "b" | "blue" => text.blue(),
+        "y" | "yellow" => text.yellow(),
+        "g" | "green" => text.green(),
+        "m" | "magenta" => text.magenta(),
+        "c" | "cyan" => text.cyan(),
+        _ => text.white(),
+    }
+}
+ */
