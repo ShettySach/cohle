@@ -59,29 +59,3 @@ pub fn print_img(img: Vec<&str>, quote: &str) {
         }
     }
 }
-
-/*
-pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
-    match colr {
-        "r" | "red" => text.red(),
-        "b" | "blue" => text.blue(),
-        "y" | "yellow" => text.yellow(),
-        "g" | "green" => text.green(),
-        "m" | "magenta" => text.magenta(),
-        "c" | "cyan" => text.cyan(),
-        _ => text.white(),
-    }
-}
-
-pub fn colcow<'a>(text: &'a Cow<'_, str>, colr: &str) -> StyledContent<&'a str> {
-    match colr {
-        "r" | "red" => text.red(),
-        "b" | "blue" => text.blue(),
-        "y" | "yellow" => text.yellow(),
-        "g" | "green" => text.green(),
-        "m" | "magenta" => text.magenta(),
-        "c" | "cyan" => text.cyan(),
-        _ => text.white(),
-    }
-}
- */
