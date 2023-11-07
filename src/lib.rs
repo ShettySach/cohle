@@ -28,12 +28,14 @@ pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
         "b" | "blue" => text.blue(),
         "y" | "yellow" => text.yellow(),
         "g" | "green" => text.green(),
+        "m" | "magenta" => text.magenta(),
+        "c" | "cyan" => text.cyan(),
         "dr" | "dark_red" => text.dark_red(),
         "db" | "dark_blue" => text.dark_blue(),
         "dy" | "dark_yellow" => text.dark_yellow(),
-        "dg" | "dark_green" => text.green(),
-        "m" | "magenta" => text.magenta(),
-        "c" | "cyan" => text.cyan(),
+        "dg" | "dark_green" => text.dark_cyan(),
+        "dm" | "dark_magenta" => text.dark_magenta(),
+        "dc" | "dark_cyan" => text.dark_cyan(),
         _ => text.white(),
     }
 }
@@ -46,6 +48,12 @@ pub fn colcow<'a>(text: &'a Cow<'_, str>, colr: &str) -> StyledContent<&'a str> 
         "g" | "green" => text.green(),
         "m" | "magenta" => text.magenta(),
         "c" | "cyan" => text.cyan(),
+        "dr" | "dark_red" => text.dark_red(),
+        "db" | "dark_blue" => text.dark_blue(),
+        "dy" | "dark_yellow" => text.dark_yellow(),
+        "dg" | "dark_green" => text.dark_cyan(),
+        "dm" | "dark_magenta" => text.dark_magenta(),
+        "dc" | "dark_cyan" => text.dark_cyan(),
         _ => text.white(),
     }
 }
