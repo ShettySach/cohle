@@ -58,44 +58,46 @@ pub fn colcow<'a>(text: &'a Cow<'_, str>, colr: &str) -> StyledContent<&'a str> 
     }
 }
 
-pub fn print_img(img: Vec<&str>, quote: &str, icolr: &str, qcolr: &str) {
+pub fn print_img(img: &str, quote: &str, icolr: &str, qcolr: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
-    let width = term_width.checked_sub(img[0].len() + 4);
+    let width = term_width.checked_sub(55);
 
     match width {
         Some(value) => {
-            let imlen = img.len();
+            let imvec = img.lines().collect::<Vec<&str>>();
+            let imlen = imvec.len();
             let wquote = wrap_text(quote, value);
             let qlen = wquote.len();
             let start = imlen.abs_diff(qlen) / 2 as usize;
 
             if imlen >= qlen {
+                let imvec = img.lines().collect::<Vec<&str>>();
                 for i in 0..start {
-                    println!("{}", colstr(img[i], icolr));
+                    println!("{}", colstr(imvec[i], icolr));
                 }
                 for i in start..(start + qlen) {
                     println!(
                         "{}  {}",
-                        colstr(img[i], icolr),
+                        colstr(imvec[i], icolr),
                         colcow(&wquote[i - start], qcolr)
                     );
                 }
 
                 for i in (start + qlen)..imlen {
-                    println!("{}", colstr(img[i], icolr));
+                    println!("{}", colstr(imvec[i], icolr));
                 }
             } else {
+                print!("{}", img);
+                print!("\n");
                 fill_print(quote, qcolr);
-                println!("\n{}",
-                    "Terminal width too small to print message, try expanding window or reducing font size".dark_grey()
-                );
             }
         }
         _ => {
+            print!(
+                "{}",
+                "Terminal width too small to print image. \n Resize or reduce font".grey()
+            );
             fill_print(quote, qcolr);
-            println!("\n{}",
-                    "Terminal width too small to print message, try expanding window or reducing font size".dark_grey()
-                );
         }
     }
 }

@@ -46,7 +46,7 @@ fn main() {
         .get_matches();
 
     let quotes = QTEXT.lines().collect::<Vec<&str>>();
-    let imgs = ITEXT.lines().collect::<Vec<&str>>();
+    let imgs = ITEXT;
 
     let ind: usize = if let Some(value) = res.get_one::<usize>("index") {
         *value
@@ -78,8 +78,6 @@ fn main() {
             cohle::colstr(ITEXT, icol);
         }
         _ => {
-            let mut rng = rand::thread_rng();
-            let ind: usize = rng.gen_range(0..quotes.len());
             cohle::print_img(imgs, quotes[ind], icol, qcol);
         }
     }
