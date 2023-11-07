@@ -2,7 +2,7 @@ use clap::{value_parser, Arg, Command};
 use rand::Rng;
 
 mod texts;
-use texts::text_vars::{ITEXT, QTEXT};
+use texts::text_vars::{ICOL, ITEXT, QCOL, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
@@ -58,13 +58,13 @@ fn main() {
     let icol: &str = if let Some(value) = res.get_one::<String>("icol") {
         value.as_str()
     } else {
-        "white"
+        ICOL
     };
 
     let qcol: &str = if let Some(value) = res.get_one::<String>("qcol") {
         value.as_str()
     } else {
-        "red"
+        QCOL
     };
 
     match res.subcommand_name() {
@@ -75,7 +75,7 @@ fn main() {
             cohle::fill_print(quotes[ind], qcol);
         }
         Some("image") => {
-            print!("{}", ITEXT);
+            cohle::colstr(ITEXT, icol);
         }
         _ => {
             let mut rng = rand::thread_rng();

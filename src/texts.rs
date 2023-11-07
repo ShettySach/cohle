@@ -1,4 +1,7 @@
 pub mod text_vars {
+    pub const ICOL : &str = "white"; //default image colour
+    pub const QCOL : &str = "red"; //default quote colour
+
     pub const ITEXT: &str = 
 "@@@@@@@@@@@@@@&&@@&B??57 .~JY##P5B&@@@&&@&&&&
 @@#&&@@&@@@@@@&&#J:          ^?JJB@@@@@@@&&&&
