@@ -2,24 +2,23 @@ use clap::{value_parser, Arg, Command};
 use rand::Rng;
 
 mod texts;
-use texts::text_vars::{ICOL, ITEXT, QCOL, QTEXT};
+use texts::text_vars::{IMARR, QCOL, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
         .about("Rust CLI that prints Rust Cohle quotes")
         .author("shettysach")
         .arg(
-            Arg::new("index")
+            Arg::new("quote_index")
                 .value_parser(value_parser!(usize))
                 .required(false)
                 .help("Index of the quote (Optional)"),
         )
         .arg(
-            Arg::new("icol")
-                .short('i')
-                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+            Arg::new("image_index")
+                .value_parser(value_parser!(usize))
                 .required(false)
-                .help("Colour of image"),
+                .help("Index of the quote (Optional)"),
         )
         .arg(
             Arg::new("qcol")
@@ -34,6 +33,11 @@ fn main() {
                 .about("Lists all the quotes along with their indices"),
         )
         .subcommand(
+            Command::new("display")
+                .visible_alias("d")
+                .about("Displays all the images along with their indices"),
+        )
+        .subcommand(
             Command::new("quote")
                 .visible_alias("q")
                 .about("Print only quote without image"),
@@ -46,20 +50,23 @@ fn main() {
         .get_matches();
 
     let quotes = QTEXT.lines().collect::<Vec<&str>>();
-    let imgs = ITEXT;
+    let imarr = IMARR;
 
-    let ind: usize = if let Some(value) = res.get_one::<usize>("index") {
+    let qind: usize = if let Some(value) = res.get_one::<usize>("quote_index") {
         *value
     } else {
         let mut rng = rand::thread_rng();
         rng.gen_range(0..quotes.len())
     };
 
-    let icol: &str = if let Some(value) = res.get_one::<String>("icol") {
-        value.as_str()
+    let imind: usize = if let Some(value) = res.get_one::<usize>("image_index") {
+        *value
     } else {
-        ICOL
+        let mut rng = rand::thread_rng();
+        rng.gen_range(0..imarr.len())
     };
+
+    let imgs = *imarr.get(imind).expect("Out of image index");
 
     let qcol: &str = if let Some(value) = res.get_one::<String>("qcol") {
         value.as_str()
@@ -72,13 +79,13 @@ fn main() {
             cohle::list_quotes(quotes);
         }
         Some("quote") => {
-            cohle::fill_print(quotes[ind], qcol);
+            cohle::fill_print(quotes[qind], qcol);
         }
         Some("image") => {
-            cohle::colstr(ITEXT, icol);
+            println!("{}", imgs);
         }
         _ => {
-            cohle::print_img(imgs, quotes[ind], icol, qcol);
+            cohle::print_img(imgs, quotes[qind], qcol);
         }
     }
 }

@@ -6,20 +6,31 @@ use textwrap::{fill, wrap};
 pub fn fill_print(input_text: &str, qcolr: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
     let filled_text = fill(input_text, term_width);
-    println!("{}", colstr(filled_text.as_str(), qcolr));
-}
-
-pub fn wrap_text(input_text: &str, width: usize) -> Vec<Cow<'_, str>> {
-    let wrapped_text = wrap(input_text, width);
-    wrapped_text
+    println!("{}\n", colstr(filled_text.as_str(), qcolr));
 }
 
 pub fn list_quotes(quotes: Vec<&str>) {
     println!("List of quotes with indices - \n");
     for (ind, quote) in quotes.iter().enumerate() {
-        println!(r#"  {} - {}...""#, ind, &quote[0..35])
+        let n = quote.len();
+        let part = if n < 45 {
+            &quote[1..n - 1]
+        } else {
+            &quote[1..45]
+        };
+        println!(r#"  {} - {}..."#, ind, &part.blue())
     }
     println!("\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote.");
+}
+
+pub fn display_images(imarr: [&str; 4]) {
+    println!("List of images with indices - \n");
+    for (ind, image) in imarr.iter().enumerate() {
+        println!("{})", ind);
+        println!("{}", image);
+        println!();
+    }
+    println!("\n Use 'cohle [quote_index] n' to print the nth image or use 'cohle' to print a random image.");
 }
 
 pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
@@ -58,42 +69,40 @@ pub fn colcow<'a>(text: &'a Cow<'_, str>, colr: &str) -> StyledContent<&'a str> 
     }
 }
 
-pub fn print_img(img: &str, quote: &str, icolr: &str, qcolr: &str) {
+pub fn print_img(img: &str, quote: &str, qcolr: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
-    let width = term_width.checked_sub(55);
+    let width = term_width.checked_sub(56);
 
     match width {
         Some(value) => {
             let imvec = img.lines().collect::<Vec<&str>>();
             let imlen = imvec.len();
-            let wquote = wrap_text(quote, value);
+            let wquote = wrap(quote, value);
             let qlen = wquote.len();
             let start = imlen.abs_diff(qlen) / 2 as usize;
 
             if imlen >= qlen {
                 let imvec = img.lines().collect::<Vec<&str>>();
                 for i in 0..start {
-                    println!("{}", colstr(imvec[i], icolr));
+                    println!("{}", imvec[i]);
                 }
                 for i in start..(start + qlen) {
-                    println!(
-                        "{}  {}",
-                        colstr(imvec[i], icolr),
-                        colcow(&wquote[i - start], qcolr)
-                    );
+                    println!("{} {}", imvec[i], colcow(&wquote[i - start], qcolr));
                 }
 
                 for i in (start + qlen)..imlen {
-                    println!("{}", colstr(imvec[i], icolr));
+                    println!("{}", imvec[i]);
                 }
+
+                println!();
             } else {
-                print!("{}", img);
-                print!("\n");
+                println!("{}", img);
+                println!("\n");
                 fill_print(quote, qcolr);
             }
         }
         _ => {
-            print!(
+            println!(
                 "{}",
                 "Terminal width too small to print image. \n Resize or reduce font".grey()
             );
