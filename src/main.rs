@@ -2,7 +2,7 @@ use clap::{value_parser, Arg, Command};
 use rand::Rng;
 
 mod texts;
-use texts::text_vars::{IMARR, QCOL, QTEXT};
+use texts::text_vars::{IMARR, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
@@ -71,12 +71,15 @@ fn main() {
     let qcol: &str = if let Some(value) = res.get_one::<String>("qcol") {
         value.as_str()
     } else {
-        QCOL
+        "white"
     };
 
     match res.subcommand_name() {
         Some("list") => {
             cohle::list_quotes(quotes);
+        }
+        Some("display") => {
+            cohle::display_images(imarr);
         }
         Some("quote") => {
             cohle::fill_print(quotes[qind], qcol);

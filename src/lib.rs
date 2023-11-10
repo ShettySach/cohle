@@ -14,11 +14,11 @@ pub fn list_quotes(quotes: Vec<&str>) {
     for (ind, quote) in quotes.iter().enumerate() {
         let n = quote.len();
         let part = if n < 45 {
-            &quote[1..n - 1]
+            &quote[1..n - 2]
         } else {
             &quote[1..45]
         };
-        println!(r#"  {} - {}..."#, ind, &part.blue())
+        println!(r#"  {}) {}..."#, ind, &part.blue())
     }
     println!("\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote.");
 }

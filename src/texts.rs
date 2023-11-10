@@ -1,5 +1,4 @@
 pub mod text_vars {
-    pub const QCOL : &str = "white"; //default quote colour
     pub const IMARR: [&str; 4] = [ITEXT_1, ITEXT_2, ITEXT_3, ITEXT_4];
 
     pub const ITEXT_1: &str = 
