@@ -7,7 +7,7 @@ use texts::text_vars::{IMARR, QTEXT};
 fn main() {
     let res = Command::new("cohle")
         .about(color_print::cstr!(
-        r#"<bold><underline><red>Cohle:</red></underline></bold> Rust CLI that prints Rust Cohle quotes"#
+        r#"<bold><underline><red>Cohle:</red></underline></bold> Rust CLI that prints Rust Cohle quotes."#
         ))
         .version("0.1.0")
         .arg(
@@ -94,11 +94,11 @@ fn main() {
             cohle::display_images(imarr);
         }
         Some("quote") => {
-            cohle::fill_print(quotes.get(qind).expect("Out of index"), qcol);
+            cohle::only_quote(quotes.get(qind).expect("Out of index"), qcol);
         }
-        Some("image") => cohle::img_print(img, &blk),
+        Some("image") => cohle::only_image(img, &blk),
         _ => {
-            cohle::print_img(img, quotes[qind], qcol, &blk);
+            cohle::quote_image(img, quotes[qind], qcol, &blk);
         }
     }
 }

@@ -1,5 +1,5 @@
 ## COHLE
-Rust CLI that prints Rust Cohle quotes
+Rust CLI that prints Rust Cohle quotes.
 
 ![Alt text](image.png)
 

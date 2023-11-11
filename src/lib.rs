@@ -2,19 +2,15 @@ use crossterm::style::{StyledContent, Stylize};
 use crossterm::terminal;
 use textwrap::{fill, wrap};
 
-pub fn fill_print(input_text: &str, qcolr: &str) {
+pub fn only_quote(input_text: &str, qcolr: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
     let filled_text = fill(input_text, term_width);
     println!("{}\n", colstr(filled_text.as_str(), qcolr));
 }
 
-pub fn img_print(img: &str, blk: &bool) {
-    let (b, e) = if *blk {
-        ("[107;40m", "[0m")
-    } else {
-        ("", "")
-    };
-    println!("{}{}{}\n", b, img, e);
+pub fn only_image(img: &str, blk: &bool) {
+    let b = if *blk { "[107;40m" } else { "" };
+    println!("{}{}\n", b, img);
 }
 
 pub fn list_quotes(quotes: Vec<&str>) {
@@ -79,7 +75,7 @@ pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
     }
 }
 
-pub fn print_img(img: &str, quote: &str, qcolr: &str, blk: &bool) {
+pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
     let term_width = terminal::size().unwrap().0 as usize;
     let width = term_width.checked_sub(56);
 
@@ -107,8 +103,8 @@ pub fn print_img(img: &str, quote: &str, qcolr: &str, blk: &bool) {
 
                 println!();
             } else {
-                img_print(img, blk);
-                fill_print(quote, qcolr);
+                only_image(img, blk);
+                only_quote(quote, qcolr);
             }
         }
         _ => {
@@ -116,7 +112,7 @@ pub fn print_img(img: &str, quote: &str, qcolr: &str, blk: &bool) {
                 "{}",
                 "Terminal width too small to print image. \n Resize or reduce font".grey()
             );
-            fill_print(quote, qcolr);
+            only_quote(quote, qcolr);
         }
     }
 }
