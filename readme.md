@@ -11,7 +11,7 @@ cargo install --path .
 **Usage:**<br> 
 cohle [options] [quote_index] [image_index] [command]
 
-**Commands:**:
+**Commands:**
 * list - Lists all the quotes along with their indices [aliases: l]
 * display - Displays all the images along with their indices [aliases: d]
 * quote - Print only quote without image [aliases: q]
