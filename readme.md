@@ -3,6 +3,11 @@ Rust CLI that prints Rust Cohle quotes
 
 ![Alt text](image.png)
 
+**Install:**
+```console
+cargo install --path .
+```
+
 **Usage:**<br> 
 cohle [options] [quote_index] [image_index] [command]
 
