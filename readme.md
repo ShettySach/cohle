@@ -4,7 +4,11 @@ Rust CLI that prints Rust Cohle quotes.
 ![Alt text](image.png)
 
 **Install:**
-```console
+```bash
+git clone https://github.com/ShettySach/cohle
+
+cd cohle
+
 cargo install --path .
 ```
 
