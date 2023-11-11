@@ -12,8 +12,10 @@ cd cohle
 cargo install --path .
 ```
 
-**Usage:**<br> 
+**Usage:**
+```console
 cohle [options] [quote_index] [image_index] [command]
+```
 
 **Commands:**
 * list - Lists all the quotes along with their indices [aliases: l]
