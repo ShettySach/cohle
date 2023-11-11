@@ -6,8 +6,7 @@ use texts::text_vars::{IMARR, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
-        .about("Rust CLI that prints Rust Cohle quotes")
-        .author("shettysach")
+        .about("\nCOHLE - \nRust CLI that prints Rust Cohle quotes")
         .arg(
             Arg::new("quote_index")
                 .value_parser(value_parser!(usize))
@@ -21,11 +20,19 @@ fn main() {
                 .help("Index of the quote (Optional)"),
         )
         .arg(
-            Arg::new("qcol")
-                .short('q')
+            Arg::new("colour")
+                .short('c')
+                .long("col")
                 .value_parser(clap::builder::NonEmptyStringValueParser::new())
                 .required(false)
-                .help("Colour of quote"),
+                .help("Use 'cohle -q <colour>' to print quote in colour"),
+        )
+        .arg(
+            Arg::new("background")
+                .short('b')
+                .long("back")
+                .action(clap::ArgAction::SetTrue)
+                .help("Use '-b' to print image with black background"),
         )
         .subcommand(
             Command::new("list")
@@ -66,9 +73,11 @@ fn main() {
         rng.gen_range(0..imarr.len())
     };
 
-    let imgs = *imarr.get(imind).expect("Out of image index");
+    let blk = res.get_flag("background");
 
-    let qcol: &str = if let Some(value) = res.get_one::<String>("qcol") {
+    let img = *imarr.get(imind).expect("Out of index");
+
+    let qcol: &str = if let Some(value) = res.get_one::<String>("colour") {
         value.as_str()
     } else {
         "white"
@@ -82,13 +91,11 @@ fn main() {
             cohle::display_images(imarr);
         }
         Some("quote") => {
-            cohle::fill_print(quotes[qind], qcol);
+            cohle::fill_print(quotes.get(qind).expect("Out of index"), qcol);
         }
-        Some("image") => {
-            println!("{}", imgs);
-        }
+        Some("image") => cohle::img_print(img, &blk),
         _ => {
-            cohle::print_img(imgs, quotes[qind], qcol);
+            cohle::print_img(img, quotes[qind], qcol, &blk);
         }
     }
 }
