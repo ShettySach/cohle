@@ -20,7 +20,7 @@ fn main() {
             Arg::new("image_index")
                 .value_parser(value_parser!(usize))
                 .required(false)
-                .help("Index of the quote (Optional)"),
+                .help("Index of the image (Optional)"),
         )
         .arg(
             Arg::new("colour")
@@ -35,7 +35,7 @@ fn main() {
                 .short('b')
                 .long("bg")
                 .action(clap::ArgAction::SetTrue)
-                .help("Use '-b' to print image with black background"),
+                .help("Print image with black background"),
         )
         .subcommand(
             Command::new("list")
