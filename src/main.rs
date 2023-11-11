@@ -6,7 +6,10 @@ use texts::text_vars::{IMARR, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
-        .about("\nCOHLE - \nRust CLI that prints Rust Cohle quotes")
+        .about(color_print::cstr!(
+        r#"<bold><underline><red>Cohle:</red></underline></bold> Rust CLI that prints Rust Cohle quotes"#
+        ))
+        .version("0.1.0")
         .arg(
             Arg::new("quote_index")
                 .value_parser(value_parser!(usize))
@@ -30,7 +33,7 @@ fn main() {
         .arg(
             Arg::new("background")
                 .short('b')
-                .long("back")
+                .long("bg")
                 .action(clap::ArgAction::SetTrue)
                 .help("Use '-b' to print image with black background"),
         )

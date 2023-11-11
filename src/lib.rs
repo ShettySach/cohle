@@ -83,7 +83,7 @@ pub fn print_img(img: &str, quote: &str, qcolr: &str, blk: &bool) {
     let term_width = terminal::size().unwrap().0 as usize;
     let width = term_width.checked_sub(56);
 
-    let b = if *blk { "[107;40m" } else { "" };
+    let bg = if *blk { "[107;40m" } else { "" };
 
     match width {
         Some(value) => {
@@ -95,14 +95,14 @@ pub fn print_img(img: &str, quote: &str, qcolr: &str, blk: &bool) {
 
             if imlen >= qlen {
                 for i in 0..start {
-                    println!("{}{}", b, imvec[i]);
+                    println!("{}{}", bg, imvec[i]);
                 }
                 for i in start..(start + qlen) {
-                    println!("{}{} {}", b, imvec[i], colstr(&qvec[i - start], qcolr));
+                    println!("{}{} {}", bg, imvec[i], colstr(&qvec[i - start], qcolr));
                 }
 
                 for i in (start + qlen)..imlen {
-                    println!("{}{}", b, imvec[i]);
+                    println!("{}{}", bg, imvec[i]);
                 }
 
                 println!();
