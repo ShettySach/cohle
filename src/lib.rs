@@ -50,7 +50,7 @@ pub fn display_images(imarr: [&str; 4]) {
     println!("List of images with indices - \n");
     for (ind, image) in imarr.iter().enumerate() {
         println!("{})", ind);
-        println!("{}", image);
+        only_image(image, &true);
         println!();
     }
     println!("\n Use 'cohle [quote_index] n' to print the nth image or use 'cohle' to print a random image.");
