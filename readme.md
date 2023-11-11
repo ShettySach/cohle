@@ -4,7 +4,7 @@ Rust CLI that prints Rust Cohle quotes.
 ![Alt text](image.png)
 
 **Install:**
-```bash
+```console
 git clone https://github.com/ShettySach/cohle
 
 cd cohle
