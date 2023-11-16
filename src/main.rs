@@ -2,7 +2,7 @@ use clap::{value_parser, Arg, Command};
 use rand::Rng;
 
 mod texts;
-use texts::text_vars::{IMARR, QTEXT};
+use texts::text_vars::{ITEXT, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
@@ -14,13 +14,7 @@ fn main() {
             Arg::new("quote_index")
                 .value_parser(value_parser!(usize))
                 .required(false)
-                .help("Index of the quote (Optional)"),
-        )
-        .arg(
-            Arg::new("image_index")
-                .value_parser(value_parser!(usize))
-                .required(false)
-                .help("Index of the image (Optional)"),
+                .help("Index of the quote [Optional]"),
         )
         .arg(
             Arg::new("colour")
@@ -28,24 +22,19 @@ fn main() {
                 .long("col")
                 .value_parser(clap::builder::NonEmptyStringValueParser::new())
                 .required(false)
-                .help("Use 'cohle -q <colour>' to print quote in colour"),
+                .help("Use 'cohle -c <colour>' to print quote in colour"),
         )
         .arg(
             Arg::new("background")
                 .short('b')
                 .long("bg")
                 .action(clap::ArgAction::SetTrue)
-                .help("Print image with black background"),
+                .help("Print image with black background [Better for lighter backgrounds]"),
         )
         .subcommand(
             Command::new("list")
                 .visible_alias("l")
-                .about("Lists all the quotes along with their indices"),
-        )
-        .subcommand(
-            Command::new("display")
-                .visible_alias("d")
-                .about("Displays all the images along with their indices"),
+                .about("Lists all the quotes and colours along with their indices"),
         )
         .subcommand(
             Command::new("quote")
@@ -60,7 +49,7 @@ fn main() {
         .get_matches();
 
     let quotes = QTEXT.lines().collect::<Vec<&str>>();
-    let imarr = IMARR;
+    let img = ITEXT;
 
     let qind: usize = if let Some(value) = res.get_one::<usize>("quote_index") {
         *value
@@ -69,16 +58,7 @@ fn main() {
         rng.gen_range(0..quotes.len())
     };
 
-    let imind: usize = if let Some(value) = res.get_one::<usize>("image_index") {
-        *value
-    } else {
-        let mut rng = rand::thread_rng();
-        rng.gen_range(0..imarr.len())
-    };
-
     let blk = res.get_flag("background");
-
-    let img = *imarr.get(imind).expect("Out of index");
 
     let qcol: &str = if let Some(value) = res.get_one::<String>("colour") {
         value.as_str()
@@ -90,13 +70,12 @@ fn main() {
         Some("list") => {
             cohle::list_quotes(quotes);
         }
-        Some("display") => {
-            cohle::display_images(imarr);
-        }
         Some("quote") => {
             cohle::only_quote(quotes.get(qind).expect("Out of index"), qcol);
         }
-        Some("image") => cohle::only_image(img, &blk),
+        Some("image") => {
+            cohle::only_image(img, &blk);
+        }
         _ => {
             cohle::quote_image(img, quotes[qind], qcol, &blk);
         }

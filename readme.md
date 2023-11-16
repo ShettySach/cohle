@@ -11,28 +11,34 @@ cd cohle
 
 cargo install --path .
 ```
-
-**Usage:**
+**Usage**: 
 ```console
-cohle [options] [quote_index] [image_index] [command]
+cohle.exe [OPTIONS] [quote_index] [COMMAND]
 ```
 
-**Commands:**
-* list - Lists all the quotes along with their indices [aliases: l]
-* display - Displays all the images along with their indices [aliases: d]
-* quote - Print only quote without image [aliases: q]
-* image - Print only image without quote [aliases: i]
-* help - Print this message or the help of the given subcommand(s)
+**Commands**:
+*  list<br>
+ Lists all the quotes along with their indices [aliases: l]<br>
+* quote<br>
+ Print only quote without image [aliases: q]
+* image<br>
+ Print only image without quote [aliases: i]<br>
+* help<br>
+ Print this message or the help of the given subcommand(s)<br>
 
-**Arguments:**
-* [quote_index]  Index of the quote (Optional)
-* [image_index]  Index of the image (Optional)
+**Arguments**:
+ * [quote_index]
+ <br>Index of the quote (Optional)
 
-**Options:**
-* -c, --col colour <br>Print quote in colour
-* -b, --bg <br>Print image with black background
-* -h, --help <br>Print help
-* -V, --version <br>Print version
+**Options**:
+*  -c, --col <colour><br>
+Use 'cohle -c <colour>' to print quote in colour
+*  -b, --bg<br>
+Print image with black background [Better for light coloured terminals]
+* -h, --help
+ <br>Print help
+* -V, --version<br>
+Print version
 
 **Colours:**
 * r | red

@@ -46,16 +46,6 @@ pub fn list_quotes(quotes: Vec<&str>) {
     println!("\n Use 'cohle -q <colour>' to print quote in colour");
 }
 
-pub fn display_images(imarr: [&str; 4]) {
-    println!("List of images with indices - \n");
-    for (ind, image) in imarr.iter().enumerate() {
-        println!("{})", ind);
-        only_image(image, &true);
-        println!();
-    }
-    println!("\n Use 'cohle [quote_index] n' to print the nth image or use 'cohle' to print a random image.");
-}
-
 pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
     match colr {
         "r" | "red" => text.red(),
