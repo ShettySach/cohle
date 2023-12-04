@@ -1,4 +1,4 @@
-use crossterm::style::{StyledContent, Stylize};
+use crossterm::style::{ResetColor, StyledContent, Stylize};
 use crossterm::terminal;
 use textwrap::{fill, wrap};
 
@@ -14,8 +14,9 @@ pub fn only_image(img: &str, blk: &bool) {
 }
 
 pub fn list_quotes(quotes: Vec<&str>) {
-    println!("List of quotes with indices - \n");
-    for (ind, quote) in quotes.iter().enumerate() {
+    println!("Quotes and indices - \n");
+
+    quotes.iter().enumerate().for_each(|(ind, quote)| {
         let n = quote.len();
         let part = if n < 45 {
             &quote[1..n - 2]
@@ -23,7 +24,8 @@ pub fn list_quotes(quotes: Vec<&str>) {
             &quote[1..45]
         };
         println!(r#"  {}) {}..."#, ind, &part.blue())
-    }
+    });
+
     println!("\n Use 'cohle n' to print the nth quote or use 'cohle' to print a random quote.");
 
     let cols = "
