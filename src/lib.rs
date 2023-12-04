@@ -5,12 +5,12 @@ use textwrap::{fill, wrap};
 pub fn only_quote(input_text: &str, qcolr: &str) {
     let term_width = terminal::size().unwrap().0 as usize;
     let filled_text = fill(input_text, term_width);
-    println!("{}\n", colstr(filled_text.as_str(), qcolr));
+    println!("{}", colstr(filled_text.as_str(), qcolr));
 }
 
 pub fn only_image(img: &str, blk: &bool) {
     let b = if *blk { "[107;40m" } else { "" };
-    println!("{}{}\n", b, img);
+    println!("{}{}", b, img);
 }
 
 pub fn list_quotes(quotes: Vec<&str>) {
@@ -33,12 +33,12 @@ pub fn list_quotes(quotes: Vec<&str>) {
     g | green
     m | magenta
     c | cyan
-    dr | dark_red
-    db | dark_blue
-    dy | dark_yellow
-    dg | dark_green
-    dm | dark_magenta
-    dc | dark_cyan
+    dr | darkred
+    db | darkblue
+    dy | darkyellow
+    dg | darkgreen
+    dm | darkmagenta
+    dc | darkcyan
     bk | black
         ";
     println!("\nColours - \n {}", cols.blue());
@@ -90,10 +90,9 @@ pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
                 for i in (start + qlen)..imlen {
                     println!("{}{}", bg, imvec[i]);
                 }
-
-                println!();
             } else {
                 only_image(img, blk);
+                println!();
                 only_quote(quote, qcolr);
             }
         }

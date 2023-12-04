@@ -7,7 +7,7 @@ use texts::text_vars::{ITEXT, QTEXT};
 fn main() {
     let res = Command::new("cohle")
         .about(color_print::cstr!(
-        r#"<bold><underline><red>Cohle:</red></underline></bold> Rust CLI that prints Rust Cohle quotes."#
+        r#"<bold><underline><blue>Cohle:</blue></underline></bold> Rust CLI that prints Rust Cohle quotes."#
         ))
         .version("0.1.0")
         .arg(

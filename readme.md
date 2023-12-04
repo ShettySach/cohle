@@ -47,10 +47,10 @@ Print version
 * g | green
 * m | magenta
 * c | cyan
-* dr | dark_red
-* db | dark_blue
-* dy | dark_yellow
-* dg | dark_green
-* dm | dark_magenta
-* dc | dark_cyan
+* dr | darkred
+* db | darkblue
+* dy | darkyellow
+* dg | darkgreen
+* dm | darkmagenta
+* dc | darkcyan
 * bk | black
