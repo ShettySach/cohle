@@ -5,12 +5,9 @@ Rust CLI that prints Rust Cohle quotes.
 
 **Install:**
 ```console
-git clone https://github.com/ShettySach/cohle
-
-cd cohle
-
-cargo install --path .
+cargo install --git=https://github.com/ShettySach/cohle
 ```
+
 **Usage**: 
 ```console
 cohle.exe [OPTIONS] [quote_index] [COMMAND]
