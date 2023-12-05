@@ -1,4 +1,4 @@
-use crossterm::style::{ResetColor, StyledContent, Stylize};
+use crossterm::style::{StyledContent, Stylize};
 use crossterm::terminal;
 use textwrap::{fill, wrap};
 
@@ -9,8 +9,14 @@ pub fn only_quote(input_text: &str, qcolr: &str) {
 }
 
 pub fn only_image(img: &str, blk: &bool) {
-    let b = if *blk { "[107;40m" } else { "" };
-    println!("{}{}", b, img);
+    if *blk {
+        let imvec = img.lines().collect::<Vec<&str>>();
+        imvec.iter().for_each(|imline| {
+            println!("[107;40m{}", imline);
+        })
+    } else {
+        println!("{}", img);
+    };
 }
 
 pub fn list_quotes(quotes: Vec<&str>) {
