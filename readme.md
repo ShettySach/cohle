@@ -10,7 +10,7 @@ cargo install --git=https://github.com/ShettySach/cohle
 
 **Usage**: 
 ```console
-cohle.exe [OPTIONS] [quote_index] [COMMAND]
+cohle [OPTIONS] [quote_index] [COMMAND]
 ```
 
 **Commands**:
