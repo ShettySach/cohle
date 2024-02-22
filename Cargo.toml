@@ -9,5 +9,5 @@ edition = "2021"
 clap = { version = "4.4.7", features = ["cargo"] }
 color-print = "0.3.5"
 crossterm = "0.27.0"
-rand = "0.8.5"
+fastrand = "2.0.1"
 textwrap = "0.16.0"

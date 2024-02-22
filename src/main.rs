@@ -1,5 +1,6 @@
+use std::usize;
+
 use clap::{value_parser, Arg, Command};
-use rand::Rng;
 
 mod texts;
 use texts::text_vars::{ITEXT, QTEXT};
@@ -12,7 +13,7 @@ fn main() {
         .version("0.1.0")
         .arg(
             Arg::new("quote_index")
-                .value_parser(value_parser!(usize))
+                .value_parser(value_parser!(u8))
                 .required(false)
                 .help("Index of the quote [Optional]"),
         )
@@ -51,11 +52,10 @@ fn main() {
     let quotes = QTEXT.lines().collect::<Vec<&str>>();
     let img = ITEXT;
 
-    let qind: usize = if let Some(value) = res.get_one::<usize>("quote_index") {
+    let qind: u8 = if let Some(value) = res.get_one::<u8>("quote_index") {
         *value
     } else {
-        let mut rng = rand::thread_rng();
-        rng.gen_range(0..quotes.len())
+        fastrand::u8(0..quotes.len() as u8)
     };
 
     let blk = res.get_flag("background");
@@ -71,13 +71,13 @@ fn main() {
             cohle::list_quotes(quotes);
         }
         Some("quote") => {
-            cohle::only_quote(quotes.get(qind).expect("Out of index"), qcol);
+            cohle::only_quote(quotes.get(qind as usize).expect("Out of index"), qcol);
         }
         Some("image") => {
             cohle::only_image(img, &blk);
         }
         _ => {
-            cohle::quote_image(img, quotes[qind], qcol, &blk);
+            cohle::quote_image(img, quotes[qind as usize], qcol, &blk);
         }
     }
 }
