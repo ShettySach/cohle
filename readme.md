@@ -44,10 +44,4 @@ Print version
 * g | green
 * m | magenta
 * c | cyan
-* dr | darkred
-* db | darkblue
-* dy | darkyellow
-* dg | darkgreen
-* dm | darkmagenta
-* dc | darkcyan
 * bk | black

@@ -1,10 +1,10 @@
-use crossterm::style::{StyledContent, Stylize};
-use crossterm::terminal;
+use colored::{ColoredString, Colorize};
+use terminal_size::{terminal_size, Width};
 use textwrap::{fill, wrap};
 
 pub fn only_quote(input_text: &str, qcolr: &str) {
-    let term_width = terminal::size().unwrap().0 as usize;
-    let filled_text = fill(input_text, term_width);
+    let (Width(term_width), _) = terminal_size().unwrap();
+    let filled_text = fill(input_text, term_width as usize);
     println!("{}", colstr(filled_text.as_str(), qcolr));
 }
 
@@ -41,12 +41,6 @@ pub fn list_quotes(quotes: Vec<&str>) {
     g | green
     m | magenta
     c | cyan
-    dr | darkred
-    db | darkblue
-    dy | darkyellow
-    dg | darkgreen
-    dm | darkmagenta
-    dc | darkcyan
     bk | black
         ";
     println!("\nColours - \n {}", cols.blue());
@@ -54,7 +48,7 @@ pub fn list_quotes(quotes: Vec<&str>) {
     println!("\n Use 'cohle -q <colour>' to print quote in colour");
 }
 
-pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
+pub fn colstr<'a>(text: &'a str, colr: &str) -> ColoredString {
     match colr {
         "r" | "red" => text.red(),
         "b" | "blue" => text.blue(),
@@ -62,19 +56,13 @@ pub fn colstr<'a>(text: &'a str, colr: &str) -> StyledContent<&'a str> {
         "g" | "green" => text.green(),
         "m" | "magenta" => text.magenta(),
         "c" | "cyan" => text.cyan(),
-        "dr" | "darkred" => text.dark_red(),
-        "db" | "darkblue" => text.dark_blue(),
-        "dy" | "darkyellow" => text.dark_yellow(),
-        "dg" | "darkgreen" => text.dark_cyan(),
-        "dm" | "darkmagenta" => text.dark_magenta(),
-        "dc" | "darkcyan" => text.dark_cyan(),
         "bk" | "black" => text.black(),
         _ => text.white(),
     }
 }
 
 pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
-    let term_width = terminal::size().unwrap().0 as usize;
+    let (Width(term_width), _) = terminal_size().unwrap();
     let width = term_width.checked_sub(56);
 
     let bg = if *blk { "[107;40m" } else { "" };
@@ -83,7 +71,7 @@ pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
         Some(value) => {
             let imvec = img.lines().collect::<Vec<&str>>();
             let imlen = imvec.len();
-            let qvec = wrap(quote, value);
+            let qvec = wrap(quote, value as usize);
             let qlen = qvec.len();
             let start = imlen.abs_diff(qlen) / 2 as usize;
 
@@ -107,7 +95,7 @@ pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
         _ => {
             println!(
                 "{}",
-                "Terminal width too small to print image. \n Resize or reduce font".grey()
+                "Terminal width too small to print image. \n Resize or reduce font".on_black()
             );
             only_quote(quote, qcolr);
         }

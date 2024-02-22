@@ -1,14 +1,15 @@
-use std::usize;
-
 use clap::{value_parser, Arg, Command};
+use colored::Colorize;
 
 mod texts;
 use texts::text_vars::{ITEXT, QTEXT};
 
 fn main() {
     let res = Command::new("cohle")
-        .about(color_print::cstr!(
-        r#"<bold><underline><blue>Cohle:</blue></underline></bold> Rust CLI that prints Rust Cohle quotes."#
+        .about(format!(
+            "{} {}",
+            "Cohle:".bold().blue(),
+            "Rust CLI that prints Rust Cohle quotes."
         ))
         .version("0.1.0")
         .arg(
