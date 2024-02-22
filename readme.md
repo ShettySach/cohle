@@ -45,3 +45,11 @@ Print version
 * m | magenta
 * c | cyan
 * bk | black
+* lr | bright_red
+* lg | bright_green
+* lb | bright_blue
+* ly | bright_yellow
+* lm | bright_magenta
+* lc | bright_cyan
+* lbk | bright_black
+* lw | bright_white"

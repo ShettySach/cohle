@@ -42,8 +42,15 @@ pub fn list_quotes(quotes: Vec<&str>) {
     m | magenta
     c | cyan
     bk | black
-        ";
-    println!("\nColours - \n {}", cols.blue());
+    lr | bright_red
+    lg | bright_green
+    lb | bright_blue
+    ly | bright_yellow
+    lm | bright_magenta
+    lc | bright_cyan
+    lbk | bright_black
+    lw | bright_white";
+    println!("\nColours - \n {}", cols.bright_blue());
 
     println!("\n Use 'cohle -q <colour>' to print quote in colour");
 }
@@ -51,12 +58,20 @@ pub fn list_quotes(quotes: Vec<&str>) {
 pub fn colstr<'a>(text: &'a str, colr: &str) -> ColoredString {
     match colr {
         "r" | "red" => text.red(),
+        "g" | "green" => text.green(),
         "b" | "blue" => text.blue(),
         "y" | "yellow" => text.yellow(),
-        "g" | "green" => text.green(),
         "m" | "magenta" => text.magenta(),
         "c" | "cyan" => text.cyan(),
         "bk" | "black" => text.black(),
+        "lr" | "bright_red" => text.bright_red(),
+        "lg" | "bright_green" => text.bright_green(),
+        "lb" | "bright_blue" => text.bright_blue(),
+        "ly" | "bright_yellow" => text.bright_yellow(),
+        "lm" | "bright_magenta" => text.bright_magenta(),
+        "lc" | "bright_cyan" => text.bright_cyan(),
+        "lbr" | "bright_black" => text.bright_black(),
+        "lw" | "bright_white" => text.bright_white(),
         _ => text.white(),
     }
 }

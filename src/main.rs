@@ -8,7 +8,7 @@ fn main() {
     let res = Command::new("cohle")
         .about(format!(
             "{} {}",
-            "Cohle:".bold().blue(),
+            "Cohle:".blue().bold().underline(),
             "Rust CLI that prints Rust Cohle quotes."
         ))
         .version("0.1.0")
