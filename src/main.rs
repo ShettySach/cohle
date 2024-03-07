@@ -1,6 +1,8 @@
 use clap::{value_parser, Arg, Command};
 use colored::Colorize;
 
+mod processing;
+use processing::*;
 mod texts;
 use texts::text_vars::{ITEXT, QTEXT};
 
@@ -8,7 +10,7 @@ fn main() {
     let res = Command::new("cohle")
         .about(format!(
             "{} {}",
-            "Cohle:".blue().bold().underline(),
+            "Cohle:".blue().bold(),
             "Rust CLI that prints Rust Cohle quotes."
         ))
         .version("0.1.0")
@@ -69,16 +71,16 @@ fn main() {
 
     match res.subcommand_name() {
         Some("list") => {
-            cohle::list_quotes(quotes);
+            list_quotes(quotes);
         }
         Some("quote") => {
-            cohle::only_quote(quotes.get(qind as usize).expect("Out of index"), qcol);
+            only_quote(quotes.get(qind as usize).expect("Out of index"), qcol);
         }
         Some("image") => {
-            cohle::only_image(img, &blk);
+            only_image(img, &blk);
         }
         _ => {
-            cohle::quote_image(img, quotes[qind as usize], qcol, &blk);
+            quote_image(img, quotes[qind as usize], qcol, &blk);
         }
     }
 }

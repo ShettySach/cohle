@@ -70,7 +70,7 @@ pub fn colstr<'a>(text: &'a str, colr: &str) -> ColoredString {
         "ly" | "bright_yellow" => text.bright_yellow(),
         "lm" | "bright_magenta" => text.bright_magenta(),
         "lc" | "bright_cyan" => text.bright_cyan(),
-        "lbr" | "bright_black" => text.bright_black(),
+        "lbk" | "bright_black" => text.bright_black(),
         "lw" | "bright_white" => text.bright_white(),
         _ => text.white(),
     }
@@ -110,7 +110,7 @@ pub fn quote_image(img: &str, quote: &str, qcolr: &str, blk: &bool) {
         _ => {
             println!(
                 "{}",
-                "Terminal width too small to print image. \n Resize or reduce font".on_black()
+                "Terminal width too small to print image. \n Resize terminal / reduce font or use 'cohle q'".bright_black()
             );
             only_quote(quote, qcolr);
         }
